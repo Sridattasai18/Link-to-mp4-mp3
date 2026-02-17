@@ -4,7 +4,6 @@ import os
 
 app = Flask(__name__)
 
-# Home Page
 @app.route("/")
 def landing():
     return render_template("main.html")
@@ -14,7 +13,6 @@ def converter():
     return render_template("index.html")
 
 
-# When user clicks Convert
 @app.route("/youtube/api", methods=["POST"])
 def convert():
     link = request.form["link_input"].strip()
@@ -22,8 +20,6 @@ def convert():
 
     try:
         yt = YouTube(link)
-
-        # Force data fetch
         yt.check_availability()
 
         title = yt.title
@@ -45,7 +41,6 @@ def convert():
                                error_message=str(e))
 
 
-# Download MP4
 @app.route("/download")
 def download_video():
     link = request.args.get("link")
@@ -56,7 +51,6 @@ def download_video():
     return send_file(file_path, as_attachment=True)
 
 
-# Download MP3
 @app.route("/downloadmp3")
 def download_mp3():
     link = request.args.get("link")
@@ -69,3 +63,4 @@ def download_mp3():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
